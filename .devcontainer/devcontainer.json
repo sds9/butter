@@ -13,7 +13,8 @@
 			"extensions": [
 				"GitHub.vscode-pull-request-github",
 				"dbaeumer.vscode-eslint",
-				"rvest.vs-code-prettier-eslint"
+				"rvest.vs-code-prettier-eslint",
+				"ms-playwright.playwright"
 			]
 		}
 	}

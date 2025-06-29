@@ -5,6 +5,7 @@
     "github.vscode-pull-request-github",
     "bierner.markdown-preview-github-styles",
     "dbaeumer.vscode-eslint",
-    "wallabyjs.quokka-vscode"
+    "wallabyjs.quokka-vscode",
+    "ms-playwright.playwright"
   ]
 }
