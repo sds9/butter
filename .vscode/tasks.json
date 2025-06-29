@@ -431,6 +431,23 @@
         "panel": "shared"
       },
       "detail": "Generate TypeDoc API docs and start Docusaurus"
+    },
+    {
+      "label": "Documentation with Coverage",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docs:comprehensive"],
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "clear": true
+      },
+      "detail": "Complete docs build: tests, coverage, TypeDoc, and Docusaurus"
     }
   ]
 }

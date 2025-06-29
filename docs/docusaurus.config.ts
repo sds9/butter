@@ -166,6 +166,11 @@ const config: Config = {
           label: 'API Reference',
           position: 'left',
         },
+        {
+          to: '/docs/coverage',
+          label: 'Coverage',
+          position: 'left',
+        },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/your-username/butter',
@@ -187,6 +192,10 @@ const config: Config = {
             {
               label: 'API Reference',
               to: '/docs/api',
+            },
+            {
+              label: 'Coverage Report',
+              to: '/docs/coverage',
             },
           ],
         },
