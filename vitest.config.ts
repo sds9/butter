@@ -10,9 +10,6 @@ export default defineConfig({
     include: ['test/**/*.test.ts', 'test/**/*.spec.ts'],
     exclude: ['node_modules', 'cdk.out'],
     
-    // Better VS Code integration
-    watch: false,
-    
     // Coverage configuration
     coverage: {
       provider: 'v8',
