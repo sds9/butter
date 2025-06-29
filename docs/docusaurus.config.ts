@@ -69,6 +69,13 @@ const config: Config = {
     ],
   ],
 
+  themes: ['@docusaurus/theme-mermaid'],
+
+  // Markdown configuration to enable Mermaid code blocks
+  markdown: {
+    mermaid: true,
+  },
+
   plugins: [
     [
       'docusaurus-plugin-typedoc',
