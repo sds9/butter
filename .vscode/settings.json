@@ -105,6 +105,10 @@
 
   // Terminal settings
   "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.env.osx": {
+    "PATH": "~/.nvm/versions/node/v23.11.0/bin:${env:PATH}",
+    "NODE_PATH": "~/.nvm/versions/node/v23.11.0/lib/node_modules"
+  },
 
   // Task settings
   "task.autoDetect": "on",
@@ -123,7 +127,12 @@
   "vitest.include": ["test/**/*.{test,spec}.ts"],
   "vitest.exclude": ["**/node_modules/**", "**/coverage/**", "**/cdk.out/**"],
   "vitest.configFile": "./vitest.config.ts",
-  "vitest.nodeExecutable": "/usr/local/bin/node",
+  "vitest.nodeExecutable": "~/.nvm/versions/node/v23.11.0/bin/node",
+  "vitest.nodeEnv": {
+    "NODE_ENV": "test",
+    "PATH": "~/.nvm/versions/node/v23.11.0/bin:${env:PATH}"
+  },
+  "vitest.rootConfig": "./vitest.config.ts",
   "vitest.runOnStart": "onlyWhenConfigured",
   "vitest.runOnWatch": true,
   "vitest.disabledWorkspaceFolders": [],
@@ -173,24 +182,5 @@
   "importCost.showCalculatingDecoration": true,
   "importCost.debug": false,
 
-  "peacock.remoteColor": "#184632",
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#256c4d",
-    "activityBar.background": "#256c4d",
-    "activityBar.foreground": "#e7e7e7",
-    "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#44215f",
-    "activityBarBadge.foreground": "#e7e7e7",
-    "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#256c4d",
-    "statusBar.background": "#184632",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#256c4d",
-    "statusBarItem.remoteBackground": "#184632",
-    "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#184632",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#18463299",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  }
+  "peacock.remoteColor": "#184632"
 }

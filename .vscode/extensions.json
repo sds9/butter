@@ -45,7 +45,6 @@
 
     // Environment & Config
     "redhat.vscode-yaml",
-    "dotenv.dotenv-vscode",
     "mikestead.dotenv",
 
     // API Testing
@@ -58,7 +57,6 @@
 
     // Productivity Enhancements
     "chakrounanas.turbo-console-log",
-    "leodevbro.blockman",
     "ms-vsliveshare.vsliveshare-pack"
   ]
 }
