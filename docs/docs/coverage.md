@@ -38,10 +38,10 @@ This project maintains the following minimum coverage thresholds:
 Click the button below to view the detailed, interactive coverage report:
 
 <a
-  href="/butter/coverage/"
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{
+href="/butter/coverage/"
+target="_blank"
+rel="noopener noreferrer"
+style={{
     display: 'inline-block',
     padding: '12px 24px',
     backgroundColor: 'var(--ifm-color-primary)',
@@ -50,9 +50,8 @@ Click the button below to view the detailed, interactive coverage report:
     borderRadius: '6px',
     fontWeight: 'bold',
     marginTop: '10px'
-  }}
->
-  📊 Open Coverage Report
+  }}>
+📊 Open Coverage Report
 </a>
 
 The report will open in a new tab and shows file-by-file coverage details.
