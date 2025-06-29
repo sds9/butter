@@ -4,7 +4,7 @@
   "vitest.include": ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
   "vitest.exclude": ["**/node_modules/**", "**/dist/**", "**/cypress/**", "**/.{idea,git,cache,output,temp}/**"],
   "vitest.workspaceConfig": "./vitest.config.ts",
-  "vitest.nodeExecutable": "/usr/local/share/nvm/versions/node/v23.11.1/bin/node",
+  "vitest.nodeExecutable": "/usr/local/bin/node",
   "typescript.preferences.include": ["test/**/*"],
   "typescript.suggest.autoImports": true,
   "testing.automaticallyOpenPeekView": "never",
