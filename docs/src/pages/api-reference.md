@@ -11,7 +11,7 @@ The complete API documentation for Butter is generated using TypeDoc and provide
 
 <div style={{textAlign: 'center', margin: '2rem 0'}}>
   <a 
-    href="/butter/api" 
+    href="/butter/docs/api" 
     className="button button--primary button--lg"
   >
     View Full API Documentation
@@ -39,7 +39,7 @@ import { Butter } from 'butter';
 
 const butter = new Butter(this, 'MyButter', {
   description: 'My Butter construct',
-  enableAdvancedFeatures: false
+  enableAdvancedFeatures: false,
 });
 ```
 
@@ -50,7 +50,7 @@ import { Butter, ButterProps } from 'butter';
 
 const props: ButterProps = {
   description: 'Advanced Butter setup',
-  enableAdvancedFeatures: true
+  enableAdvancedFeatures: true,
 };
 
 const butter = new Butter(this, 'AdvancedButter', props);
@@ -68,6 +68,6 @@ Butter is written in TypeScript and provides full type definitions. Your IDE wil
 
 ## Need Help?
 
-- Check the [API Documentation](/butter/api) for detailed method signatures
+- Check the [API Documentation](/butter/docs/api) for detailed method signatures
 - Look at the [examples](/docs/examples) for common use cases
 - Report issues on [GitHub](https://github.com/your-username/butter/issues)

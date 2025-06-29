@@ -77,8 +77,8 @@ const config: Config = {
         tsconfig: '../tsconfig.typedoc.json',
         out: 'docs/api',
         sidebar: {
-          categoryLabel: 'API Reference',
-          position: 0,
+          autoConfiguration: true,
+          pretty: true,
         },
         plugin: ['typedoc-plugin-markdown'],
         readme: 'none',

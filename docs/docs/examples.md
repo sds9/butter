@@ -38,11 +38,11 @@ export class ConfiguredStack extends Stack {
 
     const butterProps: ButterProps = {
       description: 'Production Butter instance',
-      enableAdvancedFeatures: true
+      enableAdvancedFeatures: true,
     };
 
     const butter = new Butter(this, 'ProductionButter', butterProps);
-    
+
     // Get configuration summary
     const summary = butter.getSummary();
     console.log(`Created Butter: ${summary.description}`);
@@ -67,7 +67,7 @@ export class EnvironmentStack extends Stack {
 
     const butterProps: ButterProps = {
       description: `Butter for ${props.environment} environment`,
-      enableAdvancedFeatures: props.environment === 'prod'
+      enableAdvancedFeatures: props.environment === 'prod',
     };
 
     const butter = new Butter(this, `${props.environment}Butter`, butterProps);
@@ -93,14 +93,14 @@ export class ValidatedStack extends Stack {
     try {
       const butter = new Butter(this, 'ValidatedButter', {
         description: 'A'.repeat(101), // This will throw an error
-        enableAdvancedFeatures: true
+        enableAdvancedFeatures: true,
       });
     } catch (error) {
       console.error('Butter configuration error:', error.message);
-      
+
       // Fall back to default configuration
       const butter = new Butter(this, 'FallbackButter', {
-        description: 'Fallback Butter configuration'
+        description: 'Fallback Butter configuration',
       });
     }
   }
@@ -119,22 +119,22 @@ import { Butter } from 'butter';
 describe('Butter Construct', () => {
   test('creates with default configuration', () => {
     const stack = new Stack();
-    
+
     const butter = new Butter(stack, 'TestButter');
     const summary = butter.getSummary();
-    
+
     expect(summary.description).toBe('Default Butter construct');
     expect(summary.advancedFeaturesEnabled).toBe(false);
   });
 
   test('creates with custom configuration', () => {
     const stack = new Stack();
-    
+
     const butter = new Butter(stack, 'TestButter', {
       description: 'Test Butter',
-      enableAdvancedFeatures: true
+      enableAdvancedFeatures: true,
     });
-    
+
     const summary = butter.getSummary();
     expect(summary.description).toBe('Test Butter');
     expect(summary.advancedFeaturesEnabled).toBe(true);
@@ -145,5 +145,5 @@ describe('Butter Construct', () => {
 ## Next Steps
 
 - Explore the [API Reference](/api-reference) for complete documentation
-- Check out the [TypeDoc API docs](/api) for detailed method signatures
+- Check out the [TypeDoc API docs](/docs/api) for detailed method signatures
 - Join the community discussions on [GitHub](https://github.com/your-username/butter)
