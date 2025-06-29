@@ -1,4 +1,5 @@
 import path from 'path';
+
 import { defineConfig } from 'vitest/config';
 
 // Vitest configuration for single project (not workspace)

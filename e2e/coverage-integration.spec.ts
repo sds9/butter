@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.describe('Coverage Integration', () => {
   test('coverage documentation page loads correctly', async ({ page }) => {
@@ -47,7 +47,7 @@ test.describe('Coverage Integration', () => {
 
     // Check if coverage report loads (it should either show the report or a 404)
     // If it's a 404, that's expected if coverage hasn't been generated yet
-    const response = await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('networkidle');
 
     // If the page loads successfully, check for coverage report elements
     try {
@@ -75,7 +75,7 @@ test.describe('Coverage Integration', () => {
           );
         }
       }
-    } catch (error) {
+    } catch {
       // This is expected if coverage hasn't been generated yet
       console.log(
         'Coverage report not yet generated - this is expected for fresh installs'

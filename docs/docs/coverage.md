@@ -39,7 +39,7 @@ Click the button below to view the detailed, interactive coverage report:
 
 <a
 href="/butter/coverage/"
-target="_blank"
+target="\_blank"
 rel="noopener noreferrer"
 style={{
     display: 'inline-block',

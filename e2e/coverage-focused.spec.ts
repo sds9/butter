@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.describe('Coverage Integration (Focused)', () => {
   test('coverage documentation page loads and displays correctly', async ({
