@@ -1,6 +1,7 @@
-import { defineConfig } from 'vitest/config';
 import path from 'path';
+import { defineConfig } from 'vitest/config';
 
+// Vitest configuration for single project (not workspace)
 export default defineConfig({
   test: {
     // Enable TypeScript support

@@ -81,6 +81,10 @@
   // Terminal settings
   "terminal.integrated.defaultProfile.linux": "bash",
 
+  // Task settings
+  "task.autoDetect": "on",
+  "task.showDecorations": true,
+
   // Git settings
   "git.autofetch": true,
   "git.confirmSync": false,
@@ -93,15 +97,36 @@
   "vitest.commandLine": "npx vitest",
   "vitest.include": ["test/**/*.{test,spec}.ts"],
   "vitest.exclude": ["**/node_modules/**", "**/coverage/**", "**/cdk.out/**"],
-  "vitest.workspaceConfig": "./vitest.config.ts",
+  "vitest.configFile": "./vitest.config.ts",
   "vitest.nodeExecutable": "/usr/local/bin/node",
   "vitest.runOnStart": "onlyWhenConfigured",
   "vitest.runOnWatch": true,
+  "vitest.disabledWorkspaceFolders": [],
   "vitest.autoRun": {
     "enabled": true,
     "onSave": true,
     "onStartup": true
   },
   "vitest.showFailures": "expand",
-  "vitest.maximumNumberOfProblems": 999
+  "vitest.maximumNumberOfProblems": 999,
+  "peacock.remoteColor": "#184632",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#256c4d",
+    "activityBar.background": "#256c4d",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#44215f",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#256c4d",
+    "statusBar.background": "#184632",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#256c4d",
+    "statusBarItem.remoteBackground": "#184632",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#184632",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#18463299",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  }
 }

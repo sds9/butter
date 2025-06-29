@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "setup": "./scripts/setup.sh",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "vitest",

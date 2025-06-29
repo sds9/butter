@@ -11,6 +11,7 @@
     "usernamehw.errorlens",
     "yoavbls.pretty-ts-errors",
     "oderwat.indent-rainbow",
-    "christian-kohler.path-intellisense"
+    "christian-kohler.path-intellisense",
+    "johnpapa.vscode-peacock"
   ]
 }

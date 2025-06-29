@@ -19,7 +19,8 @@
         "bierner.markdown-preview-github-styles",
         "usernamehw.errorlens",
         "YoavBls.pretty-ts-errors",
-        "oderwat.indent-rainbow"
+        "oderwat.indent-rainbow",
+        "johnpapa.vscode-peacock"
       ]
     }
   }

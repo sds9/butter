@@ -2,6 +2,41 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Setup Project",
+      "type": "shell",
+      "command": "./scripts/setup.sh",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "detail": "Automatically runs 'nvm use' and 'npm install' when the workspace opens"
+    },
+    {
+      "label": "Manual Setup",
+      "type": "shell",
+      "command": "./scripts/setup.sh",
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": [],
+      "detail": "Manually run 'nvm use' and 'npm install' setup"
+    },
+    {
       "label": "Run Vitest",
       "type": "shell",
       "command": "npm",

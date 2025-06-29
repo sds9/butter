@@ -13,12 +13,24 @@ This is a **complete, production-ready development environment** with:
 - ✅ **Auto-linting** with fix-on-save
 - ✅ **File nesting** for clean project structure
 - ✅ **Comprehensive npm scripts** for all development tasks
+- ✅ **Auto-setup on project open** - Automatically runs `nvm use` and `npm install`
 
 ## 🚀 Quick Start
 
+**The easiest way:** Just open the project in VS Code! It will automatically:
+
+1. Run `nvm use` (if NVM is available)
+2. Install dependencies with `npm install`
+3. Start running tests automatically
+
+**Manual setup:**
+
 ```bash
-# Install dependencies
-npm install
+# Run the setup script
+npm run setup
+
+# Or run setup manually
+nvm use && npm install
 
 # Run development check (lint + typecheck + test)
 npm run dev
@@ -40,6 +52,10 @@ This project demonstrates a TypeScript construct library that includes:
 - VS Code settings optimized for TypeScript development
 
 ## 🛠 Available Commands
+
+### Setup
+
+- `npm run setup` - **Project setup** (nvm use + npm install + status info)
 
 ### Development
 
@@ -78,6 +94,7 @@ This project is fully configured for VS Code with:
 
 ### Configured Features
 
+- **Auto-Setup on Open** - Automatically runs `nvm use` and `npm install` when opening project
 - **Format on Save** - Automatically format files when saving
 - **Format on Paste** - Format pasted code
 - **Auto-fix ESLint** - Fix linting issues on save
@@ -90,6 +107,8 @@ This project is fully configured for VS Code with:
 
 ### Available Tasks (Ctrl+Shift+P → "Tasks: Run Task")
 
+- **Setup Project** - Run `nvm use` and `npm install` (auto-runs on open)
+- **Manual Setup** - Manual project setup if auto-setup fails
 - **Run Vitest** - Start test watcher
 - **Run ESLint** - Lint and fix code
 - **TypeScript Compile** - Build the project
