@@ -6,6 +6,9 @@
     "bierner.markdown-preview-github-styles",
     "dbaeumer.vscode-eslint",
     "wallabyjs.quokka-vscode",
-    "ms-playwright.playwright"
+    "ms-playwright.playwright",
+    "usernamehw.errorlens",
+    "yoavbls.pretty-ts-errors",
+    "oderwat.indent-rainbow"
   ]
 }

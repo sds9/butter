@@ -16,7 +16,10 @@
         "rvest.vs-code-prettier-eslint",
         "ms-playwright.playwright",
         "WallabyJs.quokka-vscode",
-        "bierner.markdown-preview-github-styles"
+        "bierner.markdown-preview-github-styles",
+        "usernamehw.errorlens",
+        "YoavBls.pretty-ts-errors",
+        "oderwat.indent-rainbow"
       ]
     }
   }
