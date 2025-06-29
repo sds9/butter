@@ -10,6 +10,7 @@ cdk.out
 coverage
 
 # TypeDoc generated documentation
+docs/api/
 docs/static/api/
 docs-md/
 

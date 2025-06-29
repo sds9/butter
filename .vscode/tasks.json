@@ -240,6 +240,21 @@
       }
     },
     {
+      "label": "Generate TypeDoc (Native)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docusaurus:typedoc"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Generate TypeDoc using Docusaurus native plugin"
+    },
+    {
       "label": "Generate TypeDoc",
       "type": "shell",
       "command": "npm",
@@ -252,7 +267,7 @@
         "focus": false,
         "panel": "shared"
       },
-      "detail": "Generate TypeDoc documentation"
+      "detail": "Generate TypeDoc documentation (legacy method)"
     },
     {
       "label": "TypeDoc Watch",

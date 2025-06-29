@@ -8,7 +8,7 @@
     "setup": "./scripts/setup.sh",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "clean": "rimraf lib coverage cdk.out docs/static/api docs-md .tsbuildinfo",
+    "clean": "rimraf lib coverage cdk.out docs/api docs/static/api docs-md .tsbuildinfo",
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
@@ -41,7 +41,8 @@
     "docusaurus:build": "cd docs && npm run build",
     "docusaurus:serve": "cd docs && npm run serve",
     "docusaurus:deploy": "cd docs && npm run deploy",
-    "docs:full": "npm run docs && npm run docusaurus:start"
+    "docusaurus:typedoc": "cd docs && npx docusaurus generate-typedoc",
+    "docs:full": "npm run docusaurus:typedoc && npm run docusaurus:start"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

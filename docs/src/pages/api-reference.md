@@ -11,10 +11,8 @@ The complete API documentation for Butter is generated using TypeDoc and provide
 
 <div style={{textAlign: 'center', margin: '2rem 0'}}>
   <a 
-    href="/api" 
+    href="/butter/api" 
     className="button button--primary button--lg"
-    target="_blank"
-    rel="noopener noreferrer"
   >
     View Full API Documentation
   </a>
@@ -70,6 +68,6 @@ Butter is written in TypeScript and provides full type definitions. Your IDE wil
 
 ## Need Help?
 
-- Check the [API Documentation](/api) for detailed method signatures
+- Check the [API Documentation](/butter/api) for detailed method signatures
 - Look at the [examples](/docs/examples) for common use cases
 - Report issues on [GitHub](https://github.com/your-username/butter/issues)

@@ -1,6 +1,6 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -66,6 +66,29 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  plugins: [
+    [
+      'docusaurus-plugin-typedoc',
+      {
+        entryPoints: ['../lib/index.ts'],
+        tsconfig: '../tsconfig.typedoc.json',
+        out: 'api',
+        sidebar: {
+          autoConfiguration: true,
+          pretty: true,
+        },
+        plugin: ['typedoc-plugin-markdown'],
+        readme: 'none',
+        hidePageTitle: true,
+        hideBreadcrumbs: false,
+        excludePrivate: false,
+        excludeProtected: false,
+        excludeExternals: true,
+        cleanOutputDir: true,
+      },
     ],
   ],
 
