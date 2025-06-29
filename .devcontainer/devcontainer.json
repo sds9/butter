@@ -14,7 +14,9 @@
 				"GitHub.vscode-pull-request-github",
 				"dbaeumer.vscode-eslint",
 				"rvest.vs-code-prettier-eslint",
-				"ms-playwright.playwright"
+				"ms-playwright.playwright",
+				"WallabyJs.quokka-vscode",
+				"bierner.markdown-preview-github-styles"
 			]
 		}
 	}
