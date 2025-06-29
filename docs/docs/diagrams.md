@@ -33,7 +33,7 @@ sequenceDiagram
     participant Frontend
     participant API
     participant Database
-    
+
     User->>Frontend: Submit form
     Frontend->>API: POST /api/data
     API->>Database: INSERT query
@@ -55,13 +55,13 @@ classDiagram
         +render() ReactElement
         +validate() boolean
     }
-    
+
     class ButterProps {
         +String title
         +String description
         +boolean isActive
     }
-    
+
     Butter --> ButterProps : uses
 ```
 
@@ -137,7 +137,7 @@ stateDiagram-v2
     Success --> Idle : reset
     Error --> Idle : reset
     Error --> Loading : retry
-    
+
     state Loading {
         [*] --> Fetching
         Fetching --> Validating
@@ -186,19 +186,19 @@ Show project milestones:
 ```mermaid
 timeline
     title Project Development Timeline
-    
+
     2024 Q1 : Project Inception
            : Initial Planning
            : Team Formation
-    
+
     2024 Q2 : Core Development
            : MVP Features
            : Alpha Testing
-    
+
     2024 Q3 : Beta Release
            : User Feedback
            : Bug Fixes
-    
+
     2024 Q4 : Production Release
            : Documentation
            : Marketing Launch
