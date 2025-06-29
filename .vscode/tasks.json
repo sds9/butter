@@ -21,6 +21,25 @@
       "detail": "Automatically runs 'nvm use' and 'npm install' when the workspace opens"
     },
     {
+      "label": "Auto-Open Documentation",
+      "type": "shell",
+      "command": "./.vscode/open-docs.sh",
+      "group": "build",
+      "isBackground": false,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "detail": "Automatically open Docusaurus documentation in Simple Browser when workspace opens"
+    },
+    {
       "label": "Manual Setup",
       "type": "shell",
       "command": "./scripts/setup.sh",
@@ -367,7 +386,7 @@
       "label": "Start Docusaurus",
       "type": "shell",
       "command": "npm",
-      "args": ["run", "docusaurus:start"],
+      "args": ["run", "docs:full"],
       "group": "build",
       "isBackground": true,
       "problemMatcher": [],
@@ -377,7 +396,10 @@
         "focus": false,
         "panel": "shared"
       },
-      "detail": "Start Docusaurus development server"
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "detail": "Generate TypeDoc API docs and start Docusaurus (auto-starts on workspace open)"
     },
     {
       "label": "Build Docusaurus",

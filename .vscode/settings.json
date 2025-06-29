@@ -182,5 +182,11 @@
   "importCost.showCalculatingDecoration": true,
   "importCost.debug": false,
 
+  // Browser and documentation settings
+  "simpleBrowser.focusLockIndicator.enabled": true,
+  "simpleBrowser.focusLockIndicator.locked": false,
+  "workbench.startupEditor": "none",
+  "workbench.editor.revealIfOpen": true,
+
   "peacock.remoteColor": "#184632"
 }
