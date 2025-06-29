@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+import path from 'path';
 
 export default defineConfig({
   test: {
@@ -8,7 +9,7 @@ export default defineConfig({
     
     // Test file patterns
     include: ['test/**/*.test.ts', 'test/**/*.spec.ts'],
-    exclude: ['node_modules', 'cdk.out'],
+    exclude: ['node_modules', 'cdk.out', 'coverage'],
     
     // Coverage configuration
     coverage: {
@@ -37,15 +38,15 @@ export default defineConfig({
     restoreMocks: true
   },
   
-  // Resolve configuration for TypeScript
+  // Resolve configuration for TypeScript and ESM
   resolve: {
     alias: {
-      '@': '/lib'
+      '@': path.resolve(__dirname, './lib')
     }
   },
   
-  // Define configuration
-  define: {
-    'import.meta.vitest': 'undefined'
+  // ESM configuration
+  esbuild: {
+    target: 'es2022'
   }
 });
