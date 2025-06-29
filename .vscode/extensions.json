@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "vitest.explorer",
+    "ms-vscode.vscode-typescript-next",
+    "github.vscode-pull-request-github",
+    "bierner.markdown-preview-github-styles",
+    "dbaeumer.vscode-eslint"
+  ]
+}
