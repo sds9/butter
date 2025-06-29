@@ -85,6 +85,8 @@ This project is fully configured for VS Code with:
 - **File Nesting** - Clean file explorer with related files grouped
 - **TypeScript InlayHints** - Helpful type information inline
 - **Integrated Testing** - Run tests directly from VS Code
+- **Auto-Run Tests** - Tests automatically run when VS Code opens and on file changes
+- **Test Debugging** - Debug tests directly in VS Code with breakpoints
 
 ### Available Tasks (Ctrl+Shift+P → "Tasks: Run Task")
 
@@ -122,6 +124,9 @@ Tests are written with **Vitest**, which provides:
 - 📊 Built-in coverage reporting
 - 🎯 Modern assertion library
 - 🔧 TypeScript support out of the box
+- 🚀 **Auto-run on startup** - Tests run automatically when you open VS Code
+- 🔍 **Auto-run on save** - Tests re-run whenever you save files
+- 🐛 **Debug support** - Set breakpoints and debug tests directly in VS Code
 
 ## 📝 Example Usage
 

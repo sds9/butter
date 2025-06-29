@@ -1,14 +1,16 @@
 {
   "recommendations": [
     "vitest.explorer",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-next",
     "github.vscode-pull-request-github",
     "bierner.markdown-preview-github-styles",
-    "dbaeumer.vscode-eslint",
     "wallabyjs.quokka-vscode",
     "ms-playwright.playwright",
     "usernamehw.errorlens",
     "yoavbls.pretty-ts-errors",
-    "oderwat.indent-rainbow"
+    "oderwat.indent-rainbow",
+    "christian-kohler.path-intellisense"
   ]
 }

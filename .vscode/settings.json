@@ -94,5 +94,14 @@
   "vitest.include": ["test/**/*.{test,spec}.ts"],
   "vitest.exclude": ["**/node_modules/**", "**/coverage/**", "**/cdk.out/**"],
   "vitest.workspaceConfig": "./vitest.config.ts",
-  "vitest.nodeExecutable": "/usr/local/bin/node"
+  "vitest.nodeExecutable": "/usr/local/bin/node",
+  "vitest.runOnStart": "onlyWhenConfigured",
+  "vitest.runOnWatch": true,
+  "vitest.autoRun": {
+    "enabled": true,
+    "onSave": true,
+    "onStartup": true
+  },
+  "vitest.showFailures": "expand",
+  "vitest.maximumNumberOfProblems": 999
 }

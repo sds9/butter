@@ -32,6 +32,11 @@ export default defineConfig({
     // Reporter configuration
     reporters: ['verbose'],
 
+    // Better error reporting for VS Code
+    outputFile: {
+      json: './coverage/test-results.json',
+    },
+
     // Mock configuration
     mockReset: true,
     clearMocks: true,
