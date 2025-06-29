@@ -6,11 +6,11 @@ export default defineConfig({
     // Enable TypeScript support
     globals: true,
     environment: 'node',
-    
+
     // Test file patterns
     include: ['test/**/*.test.ts', 'test/**/*.spec.ts'],
     exclude: ['node_modules', 'cdk.out', 'coverage'],
-    
+
     // Coverage configuration
     coverage: {
       provider: 'v8',
@@ -21,32 +21,32 @@ export default defineConfig({
         'test',
         '**/*.d.ts',
         '**/*.config.*',
-        '**/coverage/**'
-      ]
+        '**/coverage/**',
+      ],
     },
-    
+
     // Timeout settings
     testTimeout: 10000,
     hookTimeout: 10000,
-    
+
     // Reporter configuration
     reporters: ['verbose'],
-    
+
     // Mock configuration
     mockReset: true,
     clearMocks: true,
-    restoreMocks: true
+    restoreMocks: true,
   },
-  
+
   // Resolve configuration for TypeScript and ESM
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './lib')
-    }
+      '@': path.resolve(__dirname, './lib'),
+    },
   },
-  
+
   // ESM configuration
   esbuild: {
-    target: 'es2022'
-  }
+    target: 'es2022',
+  },
 });

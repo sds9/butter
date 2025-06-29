@@ -1,13 +1,98 @@
 {
-  "vitest.enable": true,
-  "vitest.commandLine": "npx vitest",
-  "vitest.include": ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-  "vitest.exclude": ["**/node_modules/**", "**/dist/**", "**/cypress/**", "**/.{idea,git,cache,output,temp}/**"],
-  "vitest.workspaceConfig": "./vitest.config.ts",
-  "vitest.nodeExecutable": "/usr/local/bin/node",
-  "typescript.preferences.include": ["test/**/*"],
+  // Editor settings
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  // File associations
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // ESLint settings
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.format.enable": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+
+  // TypeScript settings
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.suggest.autoImports": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.include": ["test/**/*"],
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+
+  // Files settings
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/cdk.out": true,
+    "**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "**/*.d.ts": {
+      "when": "$(basename).ts"
+    }
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/coverage/**": true,
+    "**/cdk.out/**": true
+  },
+
+  // Search settings
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/cdk.out": true
+  },
+
+  // Explorer settings
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js, ${capture}.d.ts, ${capture}.js.map",
+    "package.json": "package-lock.json, npm-shrinkwrap.json, yarn.lock",
+    "tsconfig.json": "tsconfig.*.json",
+    ".eslintrc.json": ".eslintignore",
+    ".prettierrc.json": ".prettierignore"
+  },
+
+  // Terminal settings
+  "terminal.integrated.defaultProfile.linux": "bash",
+
+  // Git settings
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  // Testing and Vitest settings
   "testing.automaticallyOpenPeekView": "never",
   "testing.defaultGutterClickAction": "run",
-  "testing.gutterEnabled": true
+  "testing.gutterEnabled": true,
+  "vitest.enable": true,
+  "vitest.commandLine": "npx vitest",
+  "vitest.include": ["test/**/*.{test,spec}.ts"],
+  "vitest.exclude": ["**/node_modules/**", "**/coverage/**", "**/cdk.out/**"],
+  "vitest.workspaceConfig": "./vitest.config.ts",
+  "vitest.nodeExecutable": "/usr/local/bin/node"
 }

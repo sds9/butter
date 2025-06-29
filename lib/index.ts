@@ -7,8 +7,7 @@ export interface ButterProps {
 }
 
 export class Butter extends Construct {
-
-  constructor(scope: Construct, id: string, props: ButterProps = {}) {
+  constructor(scope: Construct, id: string, _props: ButterProps = {}) {
     super(scope, id);
 
     // Define construct contents here
