@@ -6,6 +6,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@docusaurus/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -13,7 +14,7 @@
     "ecmaVersion": 2022,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "prettier", "import"],
+  "plugins": ["@typescript-eslint", "prettier", "import", "@docusaurus"],
   "rules": {
     // Prettier integration
     "prettier/prettier": "error",
@@ -93,8 +94,56 @@
     "no-async-promise-executor": "error",
     "no-await-in-loop": "warn",
     "no-promise-executor-return": "error",
-    "require-atomic-updates": "error"
+    "require-atomic-updates": "error",
+
+    // Docusaurus specific rules
+    "@docusaurus/string-literal-i18n-messages": "error",
+    "@docusaurus/no-untranslated-text": [
+      "warn",
+      {
+        "ignoredStrings": [
+          "·",
+          "—",
+          "×",
+          "→",
+          "←",
+          "↑",
+          "↓",
+          "✓",
+          "✗",
+          "⚠",
+          "ℹ",
+          "🎯",
+          "🚀",
+          "✅",
+          "📊",
+          "📈",
+          "🔧",
+          "🎪",
+          "npm",
+          "API",
+          "URL",
+          "HTTP",
+          "HTTPS",
+          "TypeScript",
+          "JavaScript",
+          "VS Code",
+          "GitHub"
+        ]
+      }
+    ],
+    "@docusaurus/no-html-links": "error",
+    "@docusaurus/prefer-docusaurus-heading": "error"
   },
+  "ignorePatterns": [
+    "docs/**/*.md",
+    "docs/**/*.mdx",
+    "docs/build/**",
+    "docs/static/**/*.md",
+    "coverage/**",
+    "lib/**",
+    "node_modules/**"
+  ],
   "overrides": [
     {
       "files": ["test/**/*.ts", "**/*.test.ts", "**/*.spec.ts", "e2e/**/*.ts"],
@@ -119,10 +168,16 @@
       }
     },
     {
-      "files": ["docs/**/*"],
+      "files": [
+        "docs/**/*.ts",
+        "docs/**/*.tsx",
+        "docs/**/*.js",
+        "docs/**/*.jsx"
+      ],
       "rules": {
         "no-console": "off",
-        "@typescript-eslint/no-var-requires": "off"
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-require-imports": "off"
       }
     },
     {

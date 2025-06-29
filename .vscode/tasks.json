@@ -115,6 +115,36 @@
       }
     },
     {
+      "label": "Run ESLint (Docs)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "lint:docs"],
+      "group": "build",
+      "problemMatcher": ["$eslint-stylish"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Run ESLint with auto-fix on Docusaurus docs TypeScript/JSX files"
+    },
+    {
+      "label": "Check ESLint (Docs)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "lint:docs:check"],
+      "group": "build",
+      "problemMatcher": ["$eslint-stylish"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Check ESLint on Docusaurus docs TypeScript/JSX files without auto-fix"
+    },
+    {
       "label": "Format with Prettier",
       "type": "shell",
       "command": "npm",

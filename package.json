@@ -22,6 +22,8 @@
     "test:debug": "vitest --inspect-brk --no-coverage",
     "lint": "eslint . --ext .ts,.js --fix",
     "lint:check": "eslint . --ext .ts,.js",
+    "lint:docs": "eslint docs/ --ext .ts,.js,.tsx,.jsx --fix",
+    "lint:docs:check": "eslint docs/ --ext .ts,.js,.tsx,.jsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
@@ -56,6 +58,7 @@
     "e2e:install": "playwright install"
   },
   "devDependencies": {
+    "@docusaurus/eslint-plugin": "^3.8.1",
     "@playwright/test": "^1.53.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.7.9",
