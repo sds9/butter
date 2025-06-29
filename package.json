@@ -8,7 +8,7 @@
     "setup": "./scripts/setup.sh",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "clean": "rimraf lib coverage cdk.out docs docs-md .tsbuildinfo",
+    "clean": "rimraf lib coverage cdk.out docs/static/api docs-md .tsbuildinfo",
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
@@ -34,9 +34,14 @@
     "release": "npm run validate && npm version patch",
     "docs": "typedoc",
     "docs:watch": "typedoc --watch",
-    "docs:serve": "npm run docs && npx http-server docs -p 3001 -o",
+    "docs:serve": "npm run docs && npx http-server docs/static/api -p 3001 -o",
     "docs:markdown": "typedoc --plugin typedoc-plugin-markdown --out docs-md",
-    "docs:clean": "rimraf docs docs-md"
+    "docs:clean": "rimraf docs/static/api docs-md",
+    "docusaurus:start": "cd docs && npm start",
+    "docusaurus:build": "cd docs && npm run build",
+    "docusaurus:serve": "cd docs && npm run serve",
+    "docusaurus:deploy": "cd docs && npm run deploy",
+    "docs:full": "npm run docs && npm run docusaurus:start"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

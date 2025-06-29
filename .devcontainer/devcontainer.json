@@ -56,8 +56,12 @@
   },
 
   // Forward ports for documentation and coverage servers
-  "forwardPorts": [3001, 3002],
+  "forwardPorts": [3000, 3001, 3002],
   "portsAttributes": {
+    "3000": {
+      "label": "Docusaurus Server",
+      "onAutoForward": "notify"
+    },
     "3001": {
       "label": "TypeDoc Server",
       "onAutoForward": "notify"

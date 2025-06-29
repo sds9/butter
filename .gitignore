@@ -10,8 +10,13 @@ cdk.out
 coverage
 
 # TypeDoc generated documentation
-docs/
+docs/static/api/
 docs-md/
+
+# Docusaurus build output
+docs/build/
+docs/.docusaurus/
+docs/node_modules/
 
 # Keep TypeDoc config
 !typedoc.json

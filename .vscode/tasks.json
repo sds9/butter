@@ -347,6 +347,53 @@
         "panel": "shared"
       },
       "detail": "Watch tests and continuously update coverage report"
+    },
+    {
+      "label": "Start Docusaurus",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docusaurus:start"],
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Start Docusaurus development server"
+    },
+    {
+      "label": "Build Docusaurus",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docusaurus:build"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Build Docusaurus for production"
+    },
+    {
+      "label": "Full Documentation",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docs:full"],
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Generate TypeDoc API docs and start Docusaurus"
     }
   ]
 }
