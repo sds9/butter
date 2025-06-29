@@ -11,6 +11,23 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.suggest.preview": true,
+  "editor.suggestSelection": "first",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "editor.parameterHints.enabled": true,
+  "editor.lightbulb.enabled": "on",
+  "editor.codeLens": true,
+  "editor.hover.delay": 300,
+  "editor.quickSuggestionsDelay": 0,
+  "editor.wordBasedSuggestions": "matchingDocuments",
 
   // File associations
   "[typescript]": {
@@ -41,12 +58,18 @@
   "typescript.inlayHints.parameterNames.enabled": "literals",
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.suggest.includePackageJsonAutoImports": "auto",
+  "typescript.suggest.completeJSDocs": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.workspaceSymbols.scope": "allOpenProjects",
 
   // Files settings
   "files.exclude": {
     "**/node_modules": true,
     "**/coverage": true,
     "**/cdk.out": true,
+    "**/docs": false,
+    "**/docs-md": false,
     "**/*.js": {
       "when": "$(basename).ts"
     },
@@ -57,14 +80,16 @@
   "files.watcherExclude": {
     "**/node_modules/**": true,
     "**/coverage/**": true,
-    "**/cdk.out/**": true
+    "**/cdk.out/**": true,
+    "**/docs/**": false
   },
 
   // Search settings
   "search.exclude": {
     "**/node_modules": true,
     "**/coverage": true,
-    "**/cdk.out": true
+    "**/cdk.out": true,
+    "**/docs": false
   },
 
   // Explorer settings
@@ -109,6 +134,29 @@
   },
   "vitest.showFailures": "expand",
   "vitest.maximumNumberOfProblems": 999,
+
+  // TypeDoc and Documentation settings
+  "typedoc.entryPoints": ["lib/index.ts"],
+  "typedoc.out": "docs",
+  "typedoc.theme": "default",
+  "typedoc.excludePrivate": false,
+  "typedoc.excludeProtected": false,
+  "typedoc.excludeExternals": true,
+  "markdown.preview.breaks": true,
+  "markdown.preview.linkify": true,
+  "markdown.preview.typographer": true,
+  "markdown.extension.toc.levels": "1..6",
+  "markdown.extension.completion.root": ".",
+
+  // Enhanced JSDoc suggestions
+  "typescript.suggest.jsdoc.generateReturns": true,
+  "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
+
+  // Import cost settings
+  "importCost.bundleSizeDecoration": "both",
+  "importCost.showCalculatingDecoration": true,
+  "importCost.debug": false,
+
   "peacock.remoteColor": "#184632",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#256c4d",

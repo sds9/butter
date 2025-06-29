@@ -8,3 +8,10 @@ cdk.out
 
 # Test coverage
 coverage
+
+# TypeDoc generated documentation
+docs/
+docs-md/
+
+# Keep TypeDoc config
+!typedoc.json

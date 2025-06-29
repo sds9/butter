@@ -182,6 +182,124 @@
         "focus": true,
         "panel": "shared"
       }
+    },
+    {
+      "label": "Clean Build",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "clean"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Test with Coverage",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:coverage"],
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Debug Tests",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:debug"],
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Check Dependencies",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "deps:check"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Generate TypeDoc",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docs"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Generate TypeDoc documentation"
+    },
+    {
+      "label": "TypeDoc Watch",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docs:watch"],
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Watch TypeScript files and regenerate docs on changes"
+    },
+    {
+      "label": "Serve TypeDoc",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docs:serve"],
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Generate and serve TypeDoc documentation on http://localhost:3001"
+    },
+    {
+      "label": "Generate Markdown Docs",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "docs:markdown"],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Generate TypeDoc documentation as Markdown files"
     }
   ]
 }

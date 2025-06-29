@@ -11,17 +11,55 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "GitHub.vscode-pull-request-github",
+        "vitest.explorer",
         "dbaeumer.vscode-eslint",
-        "rvest.vs-code-prettier-eslint",
-        "ms-playwright.playwright",
-        "WallabyJs.quokka-vscode",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.docs-authoring-pack",
+        "yzhang.markdown-all-in-one",
         "bierner.markdown-preview-github-styles",
+        "shd101wyy.markdown-preview-enhanced",
+        "psulek-solo.typedoc-live-preview",
+        "github.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "wallabyjs.quokka-vscode",
+        "ms-playwright.playwright",
+        "wallabyjs.console-ninja",
         "usernamehw.errorlens",
-        "YoavBls.pretty-ts-errors",
+        "yoavbls.pretty-ts-errors",
+        "streetsidesoftware.code-spell-checker",
+        "wix.vscode-import-cost",
+        "christian-kohler.npm-intellisense",
+        "christian-kohler.path-intellisense",
+        "pmneo.tsimporter",
+        "pflannery.vscode-versionlens",
         "oderwat.indent-rainbow",
-        "johnpapa.vscode-peacock"
+        "johnpapa.vscode-peacock",
+        "formulahendry.auto-rename-tag",
+        "formulahendry.auto-close-tag",
+        "gruntfuggly.todo-tree",
+        "alefragnani.bookmarks",
+        "redhat.vscode-yaml",
+        "dotenv.dotenv-vscode",
+        "mikestead.dotenv",
+        "rangav.vscode-thunder-client",
+        "humao.rest-client",
+        "ms-azuretools.vscode-azureterraform",
+        "amazonwebservices.aws-toolkit-vscode",
+        "chakrounanas.turbo-console-log",
+        "leodevbro.blockman",
+        "chunsen.bracket-select",
+        "ms-vsliveshare.vsliveshare-pack"
       ]
+    }
+  },
+
+  // Forward ports for documentation server
+  "forwardPorts": [3001],
+  "portsAttributes": {
+    "3001": {
+      "label": "TypeDoc Server",
+      "onAutoForward": "notify"
     }
   }
 
