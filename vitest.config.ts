@@ -15,15 +15,40 @@ export default defineConfig({
     // Coverage configuration
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov', 'text-summary'],
+      reportsDirectory: './coverage',
       exclude: [
         'node_modules',
         'cdk.out',
         'test',
+        'docs',
+        'docs-md',
         '**/*.d.ts',
         '**/*.config.*',
         '**/coverage/**',
+        'scripts/**',
+        '**/*.test.ts',
+        '**/*.spec.ts',
       ],
+      // Coverage thresholds
+      thresholds: {
+        global: {
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          statements: 80,
+        },
+      },
+      // Include source files for coverage even if not tested
+      all: true,
+      include: ['lib/**/*.ts'],
+      // Watermarks for coverage colors
+      watermarks: {
+        statements: [50, 80],
+        functions: [50, 80],
+        branches: [50, 80],
+        lines: [50, 80],
+      },
     },
 
     // Timeout settings

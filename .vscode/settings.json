@@ -135,6 +135,22 @@
   "vitest.showFailures": "expand",
   "vitest.maximumNumberOfProblems": 999,
 
+  // Coverage-specific settings
+  "coverage-gutters.showLineCoverage": true,
+  "coverage-gutters.showRulerCoverage": true,
+  "coverage-gutters.showGutterCoverage": true,
+  "coverage-gutters.lcovname": "lcov.info",
+  "coverage-gutters.xmlname": "cobertura-coverage.xml",
+  "coverage-gutters.jsonname": "coverage-final.json",
+  "coverage-gutters.coverageFileNames": [
+    "lcov.info",
+    "cov.xml",
+    "coverage.xml",
+    "jacoco.xml",
+    "coverage-final.json"
+  ],
+  "coverage-gutters.coverageBaseDir": "./coverage",
+
   // TypeDoc and Documentation settings
   "typedoc.entryPoints": ["lib/index.ts"],
   "typedoc.out": "docs",

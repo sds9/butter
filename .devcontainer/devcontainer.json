@@ -25,6 +25,7 @@
         "wallabyjs.quokka-vscode",
         "ms-playwright.playwright",
         "wallabyjs.console-ninja",
+        "ryanluker.vscode-coverage-gutters",
         "usernamehw.errorlens",
         "yoavbls.pretty-ts-errors",
         "streetsidesoftware.code-spell-checker",
@@ -54,11 +55,15 @@
     }
   },
 
-  // Forward ports for documentation server
-  "forwardPorts": [3001],
+  // Forward ports for documentation and coverage servers
+  "forwardPorts": [3001, 3002],
   "portsAttributes": {
     "3001": {
       "label": "TypeDoc Server",
+      "onAutoForward": "notify"
+    },
+    "3002": {
+      "label": "Coverage Server",
       "onAutoForward": "notify"
     }
   }

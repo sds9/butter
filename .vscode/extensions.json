@@ -21,6 +21,7 @@
     "wallabyjs.quokka-vscode",
     "ms-playwright.playwright",
     "wallabyjs.console-ninja",
+    "ryanluker.vscode-coverage-gutters",
 
     // Code Quality & Productivity
     "usernamehw.errorlens",

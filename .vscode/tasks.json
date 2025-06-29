@@ -300,6 +300,53 @@
         "panel": "shared"
       },
       "detail": "Generate TypeDoc documentation as Markdown files"
+    },
+    {
+      "label": "Test with Coverage",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:coverage"],
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Run tests and generate coverage report"
+    },
+    {
+      "label": "Serve Coverage Report",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:coverage:serve"],
+      "group": "test",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Generate coverage report and serve it on http://localhost:3002"
+    },
+    {
+      "label": "Test Coverage Watch",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:coverage:watch"],
+      "group": "test",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "detail": "Watch tests and continuously update coverage report"
     }
   ]
 }
