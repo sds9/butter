@@ -8,7 +8,12 @@
   "excludePrivate": false,
   "excludeProtected": false,
   "excludeExternals": true,
-  "exclude": ["**/node_modules/**", "**/docs/**", "**/coverage/**", "**/test/**"],
+  "exclude": [
+    "**/node_modules/**",
+    "**/docs/**",
+    "**/coverage/**",
+    "**/test/**"
+  ],
   "readme": "README.md",
   "theme": "default",
   "lightHighlightTheme": "light-plus",

@@ -1,0 +1,350 @@
+name: ⚡ Performance Monitor
+
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * *' # Daily at 2 AM UTC
+  workflow_dispatch:
+
+concurrency:
+  group: performance-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # 📊 Bundle size analysis
+  bundle-analysis:
+    name: 📊 Bundle Size Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗️ Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: 🏗️ Build package
+        run: npm run build
+
+      - name: 📊 Analyze bundle size
+        run: |
+          # Install bundlephobia CLI
+          npm install -g bundlephobia
+
+          # Analyze main bundle
+          echo "## 📦 Package Size Analysis" > bundle-report.md
+          echo "" >> bundle-report.md
+
+          # Get package size
+          PACKAGE_SIZE=$(du -sh lib/ | cut -f1)
+          echo "### Built Package Size: $PACKAGE_SIZE" >> bundle-report.md
+          echo "" >> bundle-report.md
+
+          # Analyze individual files
+          echo "### File Breakdown:" >> bundle-report.md
+          echo "\`\`\`" >> bundle-report.md
+          find lib -name "*.js" -exec du -h {} \; | sort -hr >> bundle-report.md
+          echo "\`\`\`" >> bundle-report.md
+
+          # Check for large files (> 100KB)
+          LARGE_FILES=$(find lib -name "*.js" -size +100k)
+          if [ -n "$LARGE_FILES" ]; then
+            echo "" >> bundle-report.md
+            echo "⚠️ **Large files detected (>100KB):**" >> bundle-report.md
+            echo "\`\`\`" >> bundle-report.md
+            echo "$LARGE_FILES" | xargs du -h >> bundle-report.md
+            echo "\`\`\`" >> bundle-report.md
+          fi
+
+      - name: 📋 Upload bundle analysis
+        uses: actions/upload-artifact@v3
+        with:
+          name: bundle-analysis
+          path: bundle-report.md
+
+      - name: 💬 Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('bundle-report.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+
+  # 🚀 Performance benchmarks
+  performance-benchmark:
+    name: 🚀 Performance Benchmarks
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗️ Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: 🏗️ Build package
+        run: npm run build
+
+      - name: ⚡ Run performance tests
+        run: |
+          # Create a simple benchmark script
+          cat > benchmark.js << 'EOF'
+          const { performance } = require('perf_hooks');
+          const fs = require('fs');
+
+          // Import the built package
+          const pkg = require('./lib/index.js');
+
+          console.log('🚀 Running performance benchmarks...');
+
+          const results = {
+            timestamp: new Date().toISOString(),
+            benchmarks: {}
+          };
+
+          // Benchmark package loading time
+          const loadStart = performance.now();
+          require('./lib/index.js');
+          const loadEnd = performance.now();
+          results.benchmarks.packageLoad = {
+            name: 'Package Load Time',
+            value: Math.round((loadEnd - loadStart) * 100) / 100,
+            unit: 'ms',
+            threshold: 50 // Warn if > 50ms
+          };
+
+          // Add more benchmarks here based on your package functionality
+          // Example: API response times, computation benchmarks, etc.
+
+          // Check thresholds
+          let passed = true;
+          for (const [key, benchmark] of Object.entries(results.benchmarks)) {
+            if (benchmark.threshold && benchmark.value > benchmark.threshold) {
+              console.log(`❌ ${benchmark.name}: ${benchmark.value}${benchmark.unit} (threshold: ${benchmark.threshold}${benchmark.unit})`);
+              passed = false;
+            } else {
+              console.log(`✅ ${benchmark.name}: ${benchmark.value}${benchmark.unit}`);
+            }
+          }
+
+          // Save results
+          fs.writeFileSync('benchmark-results.json', JSON.stringify(results, null, 2));
+
+          if (!passed) {
+            console.log('❌ Some benchmarks failed their thresholds');
+            process.exit(1);
+          }
+
+          console.log('✅ All benchmarks passed');
+          EOF
+
+          node benchmark.js
+
+      - name: 📊 Generate performance report
+        run: |
+          echo "## ⚡ Performance Benchmark Results" > performance-report.md
+          echo "" >> performance-report.md
+          echo "### Benchmark Summary" >> performance-report.md
+          echo "" >> performance-report.md
+
+          # Parse benchmark results
+          node -e "
+            const results = require('./benchmark-results.json');
+            console.log('| Benchmark | Value | Threshold | Status |');
+            console.log('|-----------|--------|-----------|--------|');
+            
+            for (const [key, benchmark] of Object.entries(results.benchmarks)) {
+              const status = benchmark.threshold && benchmark.value > benchmark.threshold ? '❌ FAIL' : '✅ PASS';
+              const threshold = benchmark.threshold ? \`\${benchmark.threshold}\${benchmark.unit}\` : 'N/A';
+              console.log(\`| \${benchmark.name} | \${benchmark.value}\${benchmark.unit} | \${threshold} | \${status} |\`);
+            }
+          " >> performance-report.md
+
+          echo "" >> performance-report.md
+          echo "### Details" >> performance-report.md
+          echo "\`\`\`json" >> performance-report.md
+          cat benchmark-results.json >> performance-report.md
+          echo "\`\`\`" >> performance-report.md
+
+      - name: 📋 Upload performance results
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-results
+          path: |
+            benchmark-results.json
+            performance-report.md
+
+  # 📈 Documentation performance
+  docs-performance:
+    name: 📈 Documentation Performance
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗️ Install dependencies
+        run: |
+          npm ci --prefer-offline --no-audit
+          cd docs && npm ci --prefer-offline --no-audit
+
+      - name: 🏗️ Build documentation
+        run: |
+          npm run build
+          npm run docusaurus:build
+
+      - name: 🎭 Install Playwright
+        run: npx playwright install chromium --with-deps
+
+      - name: 📈 Audit documentation performance
+        run: |
+          # Start documentation server
+          cd docs && npm run serve &
+          DOC_SERVER_PID=$!
+
+          # Wait for server to start
+          sleep 10
+
+          # Run Lighthouse audit
+          npm install -g @lhci/cli@0.12.x
+
+          cat > lighthouserc.json << 'EOF'
+          {
+            "ci": {
+              "collect": {
+                "url": ["http://localhost:3000/butter/"],
+                "startServerCommand": "",
+                "numberOfRuns": 3
+              },
+              "assert": {
+                "assertions": {
+                  "categories:performance": ["error", {"minScore": 0.8}],
+                  "categories:accessibility": ["error", {"minScore": 0.9}],
+                  "categories:best-practices": ["error", {"minScore": 0.8}],
+                  "categories:seo": ["error", {"minScore": 0.8}]
+                }
+              }
+            }
+          }
+          EOF
+
+          # Run Lighthouse CI
+          lhci collect
+          lhci assert
+
+          # Kill documentation server
+          kill $DOC_SERVER_PID
+
+      - name: 📋 Upload Lighthouse results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+
+  # 📊 Performance summary
+  performance-summary:
+    name: 📊 Performance Summary
+    runs-on: ubuntu-latest
+    needs: [bundle-analysis, performance-benchmark, docs-performance]
+    if: always()
+    steps:
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: 📊 Generate combined report
+        run: |
+          echo "# ⚡ Performance Report" > performance-summary.md
+          echo "" >> performance-summary.md
+          echo "Generated on: $(date)" >> performance-summary.md
+          echo "" >> performance-summary.md
+
+          # Bundle Analysis
+          if [ -f "artifacts/bundle-analysis/bundle-report.md" ]; then
+            cat artifacts/bundle-analysis/bundle-report.md >> performance-summary.md
+            echo "" >> performance-summary.md
+          fi
+
+          # Performance Benchmarks
+          if [ -f "artifacts/performance-results/performance-report.md" ]; then
+            cat artifacts/performance-results/performance-report.md >> performance-summary.md
+            echo "" >> performance-summary.md
+          fi
+
+          # Documentation Performance
+          echo "## 📈 Documentation Performance" >> performance-summary.md
+          if [ "${{ needs.docs-performance.result }}" == "success" ]; then
+            echo "✅ **PASSED** - Documentation meets performance standards" >> performance-summary.md
+          else
+            echo "❌ **FAILED** - Documentation performance issues detected" >> performance-summary.md
+          fi
+
+          # Overall Status
+          echo "" >> performance-summary.md
+          echo "## 🎯 Overall Status" >> performance-summary.md
+
+          FAILED_JOBS=0
+          if [ "${{ needs.bundle-analysis.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          if [ "${{ needs.performance-benchmark.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          if [ "${{ needs.docs-performance.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+
+          if [ $FAILED_JOBS -eq 0 ]; then
+            echo "✅ **ALL CHECKS PASSED** - Performance is within acceptable limits" >> performance-summary.md
+          else
+            echo "❌ **$FAILED_JOBS CHECK(S) FAILED** - Performance issues detected" >> performance-summary.md
+          fi
+
+      - name: 📋 Upload combined report
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-summary
+          path: performance-summary.md
+
+      - name: 💬 Comment performance summary on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('performance-summary.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });

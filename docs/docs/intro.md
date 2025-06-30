@@ -43,7 +43,7 @@ export class MyStack extends Stack {
 
     const butter = new Butter(this, 'MyButter', {
       description: 'My awesome Butter construct',
-      enableAdvancedFeatures: true
+      enableAdvancedFeatures: true,
     });
   }
 }

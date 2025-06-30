@@ -11,6 +11,7 @@ Butter is a powerful AWS CDK construct that provides...
 ## Examples
 
 Basic usage:
+
 ```typescript
 import { Butter, ButterProps } from './lib/index';
 import { Stack, StackProps } from 'aws-cdk-lib';
@@ -22,17 +23,18 @@ export class MyStack extends Stack {
 
     const butter = new Butter(this, 'MyButter', {
       description: 'My awesome Butter construct',
-      enableAdvancedFeatures: true
+      enableAdvancedFeatures: true,
     });
   }
 }
 ```
 
 Advanced usage with custom configuration:
+
 ```typescript
 const butter = new Butter(this, 'AdvancedButter', {
   description: 'Advanced Butter with custom settings',
-  enableAdvancedFeatures: true
+  enableAdvancedFeatures: true,
 });
 ```
 
@@ -83,7 +85,7 @@ When invalid configuration is provided
 ```typescript
 const butter = new Butter(this, 'MyButter', {
   description: 'My Butter construct',
-  enableAdvancedFeatures: true
+  enableAdvancedFeatures: true,
 });
 ```
 
@@ -119,7 +121,7 @@ The configuration to validate
 
 When configuration is invalid
 
-***
+---
 
 ### createResources()
 
@@ -137,7 +139,7 @@ void
 
 #### Private
 
-***
+---
 
 ### enableAdvancedFeatures()
 
@@ -155,7 +157,7 @@ void
 
 #### Private
 
-***
+---
 
 ### getSummary()
 
@@ -199,7 +201,7 @@ Defined in: [index.ts:78](https://github.com/sds9/butter/blob/main/lib/index.ts#
 
 The description of this Butter construct
 
-***
+---
 
 ### advancedFeaturesEnabled
 

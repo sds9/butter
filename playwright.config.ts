@@ -20,25 +20,46 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://localhost:3000/butter',
 
+    /* Run tests in headless mode by default (can be overridden with --headed) */
+    headless: true,
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    /* Take screenshot on failure for debugging */
+    screenshot: 'only-on-failure',
+
+    /* Record video on failure for debugging */
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        // Ensure headless mode is always enforced
+        headless: true,
+      },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        ...devices['Desktop Firefox'],
+        // Ensure headless mode is always enforced
+        headless: true,
+      },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        // Ensure headless mode is always enforced
+        headless: true,
+      },
     },
 
     /* Test against mobile viewports. */

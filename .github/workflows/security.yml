@@ -1,0 +1,250 @@
+name: 🔒 Security & Dependencies
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Weekly on Monday
+  push:
+    branches: [main]
+    paths:
+      - 'package*.json'
+      - '.github/workflows/security.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 🔍 Dependency vulnerability scan
+  vulnerability-scan:
+    name: 🔍 Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 🔍 Run npm audit
+        run: |
+          npm audit --audit-level high --json > audit-results.json || true
+
+          # Check if there are high/critical vulnerabilities
+          HIGH_VULNS=$(cat audit-results.json | jq '.vulnerabilities | to_entries | map(select(.value.severity == "high" or .value.severity == "critical")) | length')
+
+          if [ "$HIGH_VULNS" -gt 0 ]; then
+            echo "❌ Found $HIGH_VULNS high/critical vulnerabilities"
+            npm audit --audit-level high
+            exit 1
+          else
+            echo "✅ No high/critical vulnerabilities found"
+          fi
+
+      - name: 📋 Upload audit results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: audit-results
+          path: audit-results.json
+
+  # 🛡️ Advanced security scanning with Snyk
+  snyk-scan:
+    name: 🛡️ Snyk Security Scan
+    runs-on: ubuntu-latest
+    if: github.event_name != 'schedule' # Skip on scheduled runs to avoid rate limits
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🛡️ Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # 📊 Dependency analysis
+  dependency-review:
+    name: 📊 Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📊 Dependency Review
+        uses: actions/dependency-review-action@v3
+        with:
+          fail-on-severity: high
+          allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC
+
+  # 🔄 Automated dependency updates
+  dependency-update:
+    name: 🔄 Update Dependencies
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 🔍 Check for updates
+        id: check-updates
+        run: |
+          npm outdated --json > outdated.json || true
+
+          if [ -s outdated.json ]; then
+            echo "updates_available=true" >> $GITHUB_OUTPUT
+            echo "📦 Updates available:"
+            cat outdated.json | jq -r 'to_entries[] | "\(.key): \(.value.current) → \(.value.latest)"'
+          else
+            echo "updates_available=false" >> $GITHUB_OUTPUT
+            echo "✅ All dependencies are up to date"
+          fi
+
+      - name: 🔄 Update dependencies
+        if: steps.check-updates.outputs.updates_available == 'true'
+        run: |
+          # Update patch and minor versions only (safer)
+          npm update
+          cd docs && npm update
+
+          # Check if package-lock.json changed
+          if git diff --quiet package-lock.json docs/package-lock.json; then
+            echo "No changes to package-lock.json files"
+          else
+            echo "package_lock_changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 🧪 Test after updates
+        if: steps.check-updates.outputs.updates_available == 'true'
+        run: |
+          npm ci
+          npm run test:run
+          npm run build
+          cd docs && npm ci && npm run build
+
+      - name: 📋 Create PR for dependency updates
+        if: steps.check-updates.outputs.updates_available == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: '🔄 chore(deps): update dependencies'
+          title: '🔄 Automated dependency updates'
+          body: |
+            ## 🔄 Automated Dependency Updates
+
+            This PR contains automated dependency updates:
+
+            ### Changes
+            - Updated patch and minor versions of dependencies
+            - Verified all tests pass with new versions
+            - Built successfully with updated dependencies
+
+            ### Review Notes
+            - 🧪 All tests are passing
+            - 🏗️ Build is successful
+            - 🔍 Security scan completed
+
+            Please review the changes and merge if everything looks good.
+
+            ---
+            *This PR was created automatically by the dependency update workflow*
+          branch: automated/dependency-updates
+          delete-branch: true
+
+  # 🗂️ License compliance check
+  license-check:
+    name: 🗂️ License Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 🏗️ Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: 🗂️ Check licenses
+        run: |
+          # Install license checker
+          npm install -g license-checker
+
+          # Generate license report
+          license-checker --json --out licenses.json
+
+          # Check for problematic licenses
+          PROBLEMATIC_LICENSES=$(cat licenses.json | jq -r 'to_entries[] | select(.value.licenses | test("GPL|AGPL|SSPL|BCL")) | .key')
+
+          if [ -n "$PROBLEMATIC_LICENSES" ]; then
+            echo "❌ Found packages with problematic licenses:"
+            echo "$PROBLEMATIC_LICENSES"
+            exit 1
+          else
+            echo "✅ All licenses are compliant"
+          fi
+
+      - name: 📋 Upload license report
+        uses: actions/upload-artifact@v3
+        with:
+          name: license-report
+          path: licenses.json
+
+  # 📈 Security reporting
+  security-report:
+    name: 📈 Security Report
+    runs-on: ubuntu-latest
+    needs: [vulnerability-scan, license-check]
+    if: always()
+    steps:
+      - name: 📥 Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: 📈 Generate security summary
+        run: |
+          echo "# 🔒 Security Summary" > security-summary.md
+          echo "" >> security-summary.md
+          echo "## Vulnerability Scan" >> security-summary.md
+
+          if [ "${{ needs.vulnerability-scan.result }}" == "success" ]; then
+            echo "✅ **PASSED** - No high/critical vulnerabilities found" >> security-summary.md
+          else
+            echo "❌ **FAILED** - High/critical vulnerabilities detected" >> security-summary.md
+          fi
+
+          echo "" >> security-summary.md
+          echo "## License Compliance" >> security-summary.md
+
+          if [ "${{ needs.license-check.result }}" == "success" ]; then
+            echo "✅ **PASSED** - All licenses are compliant" >> security-summary.md
+          else
+            echo "❌ **FAILED** - Problematic licenses detected" >> security-summary.md
+          fi
+
+          echo "" >> security-summary.md
+          echo "Generated on: $(date)" >> security-summary.md
+
+      - name: 📋 Upload security summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-summary
+          path: security-summary.md

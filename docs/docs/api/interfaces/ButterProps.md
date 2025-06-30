@@ -33,10 +33,10 @@ Optional description for the Butter construct
 #### Default Value
 
 ```ts
-"Default Butter construct"
+'Default Butter construct';
 ```
 
-***
+---
 
 ### enableAdvancedFeatures?
 
@@ -49,5 +49,5 @@ Whether to enable advanced features
 #### Default Value
 
 ```ts
-false
+false;
 ```

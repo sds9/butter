@@ -1,0 +1,39 @@
+# Code Owners for the Butter project
+
+# This file defines who should review specific parts of the codebase
+
+# Default owners for everything in the repo
+
+- @jacobshattuck
+
+# GitHub configuration and workflows
+
+/.github/ @jacobshattuck
+
+# Documentation
+
+/docs/ @jacobshattuck
+\*.md @jacobshattuck
+
+# Core library code
+
+/lib/ @jacobshattuck
+/src/ @jacobshattuck
+\*.ts @jacobshattuck
+
+# Tests
+
+/test/ @jacobshattuck
+/e2e/ @jacobshattuck
+
+# Configuration files
+
+_.config._ @jacobshattuck
+tsconfig*.json @jacobshattuck
+package*.json @jacobshattuck
+
+# Build and deployment
+
+/scripts/ @jacobshattuck
+Dockerfile @jacobshattuck
+.dockerignore @jacobshattuck

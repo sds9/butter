@@ -3,27 +3,27 @@
 const typedocSidebar = {
   items: [
     {
-      type: "category",
-      label: "Classes",
+      type: 'category',
+      label: 'Classes',
       items: [
         {
-          type: "doc",
-          id: "api/classes/Butter",
-          label: "Butter"
-        }
-      ]
+          type: 'doc',
+          id: 'api/classes/Butter',
+          label: 'Butter',
+        },
+      ],
     },
     {
-      type: "category",
-      label: "Interfaces",
+      type: 'category',
+      label: 'Interfaces',
       items: [
         {
-          type: "doc",
-          id: "api/interfaces/ButterProps",
-          label: "ButterProps"
-        }
-      ]
-    }
-  ]
+          type: 'doc',
+          id: 'api/interfaces/ButterProps',
+          label: 'ButterProps',
+        },
+      ],
+    },
+  ],
 };
 module.exports = typedocSidebar.items;

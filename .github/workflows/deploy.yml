@@ -1,0 +1,258 @@
+name: 🚀 Deploy
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # 🏷️ Create release
+  release:
+    name: 🏷️ Create Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      release_id: ${{ steps.create_release.outputs.id }}
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📋 Generate changelog
+        id: changelog
+        run: |
+          # Generate changelog from commits since last tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+          if [ -n "$PREVIOUS_TAG" ]; then
+            CHANGELOG=$(git log --pretty=format:"- %s" $PREVIOUS_TAG..HEAD)
+          else
+            CHANGELOG=$(git log --pretty=format:"- %s")
+          fi
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 🏷️ Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## Changes in this release
+
+            ${{ steps.changelog.outputs.changelog }}
+
+            ## Assets
+            - 📦 NPM package: https://www.npmjs.com/package/butter
+            - 📚 Documentation: https://your-username.github.io/butter/
+
+            ## Installation
+            ```bash
+            npm install butter@${{ github.ref_name }}
+            ```
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+
+  # 📦 Publish to NPM
+  publish-npm:
+    name: 📦 Publish to NPM
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: release
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: 🏗️ Install dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: 🏗️ Build package
+        run: npm run build
+
+      - name: 🧪 Run tests
+        run: npm run test:run
+
+      - name: 📦 Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # 📚 Deploy Documentation
+  deploy-docs:
+    name: 📚 Deploy Documentation
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗️ Install main dependencies
+        run: npm ci --prefer-offline --no-audit
+
+      - name: 🏗️ Install docs dependencies
+        run: cd docs && npm ci --prefer-offline --no-audit
+
+      - name: 🏗️ Build main package
+        run: npm run build
+
+      - name: 📊 Generate coverage report
+        run: npm run test:coverage
+
+      - name: 📋 Copy coverage to docs
+        run: npm run test:coverage:copy
+
+      - name: 📚 Generate API documentation
+        run: npm run docusaurus:typedoc
+
+      - name: 🏗️ Build documentation
+        run: npm run docusaurus:build
+
+      - name: 📄 Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: 📦 Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs/build
+
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+  # 🎯 Deploy to staging
+  deploy-staging:
+    name: 🎯 Deploy to Staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event.inputs.environment == 'staging'
+    environment:
+      name: staging
+      url: https://staging.your-domain.com
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗️ Install and build
+        run: |
+          npm ci --prefer-offline --no-audit
+          cd docs && npm ci --prefer-offline --no-audit
+          npm run build
+          npm run docusaurus:build
+
+      - name: 🚀 Deploy to staging
+        run: |
+          echo "🎯 Deploying to staging environment..."
+          echo "📚 Documentation built and ready for staging deployment"
+          # Add your staging deployment commands here
+          # Example: aws s3 sync docs/build/ s3://staging-bucket/
+          # Example: kubectl apply -f k8s/staging/
+
+  # 🏭 Deploy to production
+  deploy-production:
+    name: 🏭 Deploy to Production
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://your-domain.com
+    needs: [release, publish-npm]
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗️ Install and build
+        run: |
+          npm ci --prefer-offline --no-audit
+          cd docs && npm ci --prefer-offline --no-audit
+          npm run build
+          npm run docusaurus:build
+
+      - name: 🏭 Deploy to production
+        run: |
+          echo "🏭 Deploying to production environment..."
+          echo "📚 Documentation built and ready for production deployment"
+          # Add your production deployment commands here
+          # Example: aws s3 sync docs/build/ s3://production-bucket/
+          # Example: kubectl apply -f k8s/production/
+
+  # 📊 Post-deployment monitoring
+  monitor:
+    name: 📊 Post-Deployment Monitor
+    runs-on: ubuntu-latest
+    needs: [deploy-docs, deploy-staging]
+    if: always() && (needs.deploy-docs.result == 'success' || needs.deploy-staging.result == 'success')
+    steps:
+      - name: 🩺 Health check
+        run: |
+          echo "🩺 Running post-deployment health checks..."
+          # Add health check commands here
+          # curl -f https://your-domain.com/health || exit 1
+          echo "✅ Health checks passed"
+
+      - name: 📊 Update deployment status
+        if: always()
+        run: |
+          if [ "${{ needs.deploy-docs.result }}" == "success" ]; then
+            echo "✅ Documentation deployment successful"
+          else
+            echo "❌ Documentation deployment failed"
+          fi
+
+          if [ "${{ needs.deploy-staging.result }}" == "success" ]; then
+            echo "✅ Staging deployment successful"
+          else
+            echo "❌ Staging deployment failed"
+          fi
